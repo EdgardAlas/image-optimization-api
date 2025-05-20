@@ -23,40 +23,92 @@ export class OptimizerController {
 	@ApiResponse({
 		type: OptimizeImagesResponseDto,
 	})
-	@UseInterceptors(FilesInterceptor('images'))
+	@UseInterceptors(
+		FilesInterceptor('images', undefined, {
+			limits: {
+				files: 20,
+			},
+		}),
+	)
 	@ApiBody({
 		schema: {
 			type: 'object',
 			properties: {
-				// DTO properties
-				quality: { type: 'number', example: 80, default: 80 },
+				quality: {
+					type: 'number',
+					example: 80,
+					default: 80,
+					description: 'Compression quality for the output images (1-100).',
+				},
 				outputFormat: {
 					type: 'string',
 					enum: ['jpeg', 'png', 'webp', 'avif', 'gif'],
 					example: 'jpeg',
 					default: 'jpeg',
+					description: 'Desired output image format.',
 				},
-				preserveFileName: { type: 'boolean', example: false, default: false },
-				maxWidth: { type: 'number', example: 800 },
-				maxHeight: { type: 'number', example: 800 },
+				preserveFileName: {
+					type: 'boolean',
+					example: false,
+					default: false,
+					description: 'Whether to preserve the original file name.',
+				},
+				maxWidth: {
+					type: 'number',
+					example: 800,
+					description: 'Maximum width for resizing images.',
+				},
+				maxHeight: {
+					type: 'number',
+					example: 800,
+					description: 'Maximum height for resizing images.',
+				},
 				resizeMode: {
 					type: 'string',
 					enum: ['contain', 'cover', 'fill', 'inset', 'outset', 'none'],
 					example: 'contain',
 					default: 'contain',
+					description: 'Resize mode to use when resizing images.',
 				},
-				modifyDimensions: { type: 'boolean', example: false, default: false },
-				removeMetadata: { type: 'boolean', example: false, default: false },
-				// File upload
+				modifyDimensions: {
+					type: 'boolean',
+					example: false,
+					default: false,
+					description: 'Whether to modify image dimensions.',
+				},
+				removeMetadata: {
+					type: 'boolean',
+					example: false,
+					default: false,
+					description: 'Whether to remove metadata from images.',
+				},
 				images: {
 					type: 'array',
 					items: {
 						type: 'string',
 						format: 'binary',
 					},
+					description: 'Array of image files to be optimized.',
 				},
 			},
 			required: ['images'],
+		},
+		description: 'Optimize images with various options.',
+		examples: {
+			default: {
+				summary: 'Default Example',
+				value: {
+					quality: 80,
+					outputFormat: 'jpeg',
+					preserveFileName: false,
+					maxWidth: 800,
+					maxHeight: 800,
+					resizeMode: 'contain',
+					modifyDimensions: false,
+					removeMetadata: false,
+					images: [],
+				},
+			},
 		},
 	})
 	optimizeImages(
