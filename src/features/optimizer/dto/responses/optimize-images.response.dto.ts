@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { OptimizeImagesRequestDto } from 'src/features/optimizer/dto/requests/optimize-images.request.dto';
 
 export class OptimizeImageResponse {
 	@ApiProperty({ description: 'The name of the image file.' })
@@ -47,6 +48,11 @@ export class OptimizeImagesResponseDto {
 		description: 'List of individual image optimization results.',
 	})
 	images: OptimizeImageResponse[];
+
+	@ApiProperty({
+		description: 'The options used for the optimization process.',
+	})
+	usedOptions: OptimizeImagesRequestDto;
 
 	constructor(props: OptimizeImagesResponseDto) {
 		Object.assign(this, props);

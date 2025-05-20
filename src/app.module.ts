@@ -1,10 +1,9 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { HealhModule } from './features/health/healh.module';
 import { ConfigModule } from '@nestjs/config';
-import { envs } from 'src/env/envs';
 import { LoggerMiddleware } from 'src/common/middlewares/logger.middleware';
+import { envs } from 'src/env/envs';
+import { HealhModule } from './features/health/healh.module';
 import { OptimizerModule } from './features/optimizer/optimizer.module';
-import { OptimizerController } from './features/optimizer.controller';
 
 @Module({
 	imports: [
@@ -14,7 +13,7 @@ import { OptimizerController } from './features/optimizer.controller';
 		}),
 		OptimizerModule,
 	],
-	controllers: [OptimizerController],
+	controllers: [],
 	providers: [],
 })
 export class AppModule {

@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
 	IsBoolean,
 	IsEnum,
@@ -9,6 +10,14 @@ import {
 	ValidateIf,
 } from 'class-validator';
 
+function ToBoolean() {
+	return Transform(({ value }) => {
+		if (typeof value === 'boolean') return value;
+		if (typeof value === 'string') return value.toLowerCase() === 'true';
+		return Boolean(value);
+	});
+}
+
 export class OptimizeImagesRequestDto {
 	@ApiPropertyOptional({
 		type: 'number',
@@ -16,6 +25,7 @@ export class OptimizeImagesRequestDto {
 		example: 80,
 		default: 80,
 	})
+	@Type(() => Number)
 	@IsNumber()
 	@Min(0, { message: 'Quality must be at least 0' })
 	@Max(100, { message: 'Quality must be at most 100' })
@@ -40,6 +50,7 @@ export class OptimizeImagesRequestDto {
 		example: true,
 		default: false,
 	})
+	@ToBoolean()
 	@IsBoolean()
 	preserveFileName: boolean = false;
 
@@ -52,6 +63,7 @@ export class OptimizeImagesRequestDto {
 	@ValidateIf((o: OptimizeImagesRequestDto) => o.modifyDimensions, {
 		message: 'Max width must be provided if modifyDimensions is true',
 	})
+	@Type(() => Number)
 	@IsNumber()
 	@Min(1, { message: 'Max width must be at least 1' })
 	@Max(10000, { message: 'Max width must be at most 10000' })
@@ -66,6 +78,7 @@ export class OptimizeImagesRequestDto {
 	@ValidateIf((o: OptimizeImagesRequestDto) => o.modifyDimensions, {
 		message: 'Max height must be provided if modifyDimensions is true',
 	})
+	@Type(() => Number)
 	@IsNumber()
 	@Min(1, { message: 'Max height must be at least 1' })
 	@Max(10000, { message: 'Max height must be at most 10000' })
@@ -77,6 +90,9 @@ export class OptimizeImagesRequestDto {
 		example: 'contain',
 		enum: ['contain', 'cover', 'fill', 'inset', 'outset', 'none'],
 		default: 'contain',
+	})
+	@ValidateIf((o: OptimizeImagesRequestDto) => o.modifyDimensions, {
+		message: 'Resize mode must be provided if modifyDimensions is true',
 	})
 	@IsString()
 	@IsEnum(['contain', 'cover', 'fill', 'inset', 'outset', 'none'], {
@@ -91,6 +107,7 @@ export class OptimizeImagesRequestDto {
 		example: true,
 		default: false,
 	})
+	@ToBoolean()
 	@IsBoolean()
 	modifyDimensions: boolean = false;
 
@@ -100,6 +117,7 @@ export class OptimizeImagesRequestDto {
 		example: true,
 		default: false,
 	})
+	@ToBoolean()
 	@IsBoolean()
 	removeMetadata?: boolean = false;
 }
