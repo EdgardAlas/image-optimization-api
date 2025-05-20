@@ -27,7 +27,7 @@ export class OptimizerController {
 		FilesInterceptor('images', undefined, {
 			limits: {
 				files: 20,
-				fieldSize: 10 * 1024 * 1024, // 10 MB per file
+				fileSize: 10 * 1024 * 1024, // 10 MB
 			},
 		}),
 	)
