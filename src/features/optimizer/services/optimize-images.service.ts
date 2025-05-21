@@ -27,20 +27,16 @@ export class OptimizeImagesService
 
 		const optimizedFiles = await Promise.all(
 			files.map((file) =>
-				this.processFile(
-					file,
-					{
-						modifyDimensions,
-						maxWidth,
-						maxHeight,
-						resizeMode,
-						removeMetadata,
-						quality,
-						outputFormat,
-						preserveFileName,
-					},
-					originalSize,
-				),
+				this.processFile(file, {
+					modifyDimensions,
+					maxWidth,
+					maxHeight,
+					resizeMode,
+					removeMetadata,
+					quality,
+					outputFormat,
+					preserveFileName,
+				}),
 			),
 		);
 
@@ -61,7 +57,6 @@ export class OptimizeImagesService
 	private async processFile(
 		file: Express.Multer.File,
 		options: OptimizeImagesRequestDto,
-		originalSize: number,
 	) {
 		const {
 			modifyDimensions,
@@ -97,7 +92,7 @@ export class OptimizeImagesService
 		const imageBuffer = await image.toBuffer();
 
 		const optimizedSize = Buffer.byteLength(imageBuffer);
-		const reduction = this.calculateReduction(originalSize, optimizedSize);
+		const reduction = this.calculateReduction(file.size, optimizedSize);
 		const imageBase64 = imageBuffer.toString('base64');
 		const url = `data:image/${outputFormat};base64,${imageBase64}`;
 
