@@ -34,15 +34,15 @@ export class OptimizeImagesRequestDto {
 	@ApiPropertyOptional({
 		type: 'string',
 		description: 'Output format of the image',
-		example: 'jpeg',
-		enum: ['jpeg', 'png', 'webp', 'avif', 'gif'],
-		default: 'jpeg',
+		example: 'jpg',
+		enum: ['jpg', 'png', 'webp', 'avif', 'gif'],
+		default: 'jpg',
 	})
 	@IsString()
-	@IsEnum(['jpeg', 'png', 'webp', 'avif', 'gif'], {
-		message: 'Output format must be one of: jpeg, png, webp, avif, gif',
+	@IsEnum(['jpg', 'png', 'webp', 'avif', 'gif'], {
+		message: 'Output format must be one of: jpg, png, webp, avif, gif',
 	})
-	outputFormat: string = 'jpeg';
+	outputFormat: string = 'jpg';
 
 	@ApiPropertyOptional({
 		type: 'boolean',

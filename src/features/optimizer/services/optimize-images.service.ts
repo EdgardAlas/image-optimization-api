@@ -102,7 +102,7 @@ export class OptimizeImagesService
 		return {
 			fileName: preserveFileName
 				? file.originalname
-				: `${crypto.randomUUID()}.jpg`,
+				: `${crypto.randomUUID()}.${outputFormat}`,
 			originalSize: file.size,
 			optimizedSize,
 			reduction,
