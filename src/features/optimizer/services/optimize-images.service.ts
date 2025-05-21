@@ -23,7 +23,7 @@ export class OptimizeImagesService
 			preserveFileName,
 		} = request;
 
-		const originalSize = this.calculateTotalSize(files);
+		const originalTotalSize = this.calculateTotalSize(files);
 
 		const optimizedFiles = await Promise.all(
 			files.map((file) =>
@@ -42,10 +42,13 @@ export class OptimizeImagesService
 
 		const optimizedSize = this.calculateOptimizedTotalSize(optimizedFiles);
 
-		const totalReduction = this.calculateReduction(originalSize, optimizedSize);
+		const totalReduction = this.calculateReduction(
+			originalTotalSize,
+			optimizedSize,
+		);
 
 		return new OptimizeImagesResponseDto({
-			originalSize,
+			originalSize: originalTotalSize,
 			optimizedSize,
 			reduction: totalReduction,
 			totalImages: files.length,
