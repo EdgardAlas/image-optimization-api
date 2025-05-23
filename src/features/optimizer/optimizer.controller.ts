@@ -43,9 +43,9 @@ export class OptimizerController {
 				},
 				outputFormat: {
 					type: 'string',
-					enum: ['jpeg', 'png', 'webp', 'avif', 'gif'],
-					example: 'jpeg',
-					default: 'jpeg',
+					enum: ['jpg', 'png', 'webp', 'avif', 'gif'],
+					example: 'jpg',
+					default: 'jpg',
 					description: 'Desired output image format.',
 				},
 				preserveFileName: {
@@ -100,7 +100,7 @@ export class OptimizerController {
 				summary: 'Default Example',
 				value: {
 					quality: 80,
-					outputFormat: 'jpeg',
+					outputFormat: 'jpg',
 					preserveFileName: false,
 					maxWidth: 800,
 					maxHeight: 800,

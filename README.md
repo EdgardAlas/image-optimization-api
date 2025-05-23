@@ -8,7 +8,7 @@ This API provides a simple way to optimize images by resizing and compressing th
 
 - Resize images to specified dimensions
 - Compress images to reduce file size
-- Support for multiple image formats (JPEG, PNG, ETC)
+- Support for multiple image formats (JPG, PNG, ETC)
 - Easy to use with a simple RESTful interface
 - Return images in base64 format
 - Support 20 images per request, up to 10MB each
