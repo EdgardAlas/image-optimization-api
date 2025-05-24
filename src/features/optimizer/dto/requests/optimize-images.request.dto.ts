@@ -35,7 +35,7 @@ export class OptimizeImagesRequestDto {
 		type: 'string',
 		description: 'Output format of the image',
 		example: 'jpg',
-		enum: ['jpg', 'png', 'webp', 'avif', 'gif'],
+		enum: ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'],
 		default: 'jpg',
 	})
 	@IsString()

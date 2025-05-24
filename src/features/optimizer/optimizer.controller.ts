@@ -29,6 +29,13 @@ export class OptimizerController {
 				files: 20,
 				fileSize: 10 * 1024 * 1024, // 10 MB
 			},
+			fileFilter: (req, file, cb) => {
+				if (file.mimetype.startsWith('image/')) {
+					cb(null, true);
+				} else {
+					cb(new Error('Only image files are allowed!'), false);
+				}
+			},
 		}),
 	)
 	@ApiBody({
@@ -43,7 +50,7 @@ export class OptimizerController {
 				},
 				outputFormat: {
 					type: 'string',
-					enum: ['jpg', 'png', 'webp', 'avif', 'gif'],
+					enum: ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif'],
 					example: 'jpg',
 					default: 'jpg',
 					description: 'Desired output image format.',
