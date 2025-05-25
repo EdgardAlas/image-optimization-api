@@ -19,9 +19,10 @@ async function bootstrap() {
 		}),
 	);
 
+	logger.log('CORS enabled for origins: ', process.env.CORS_ORIGINS);
+
 	app.enableCors({
 		origin: process.env.CORS_ORIGINS?.split(','),
-		credentials: true,
 	});
 
 	const config = new DocumentBuilder()
