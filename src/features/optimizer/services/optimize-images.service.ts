@@ -100,9 +100,14 @@ export class OptimizeImagesService
 		const imageBase64 = imageBuffer.toString('base64');
 		const url = `data:image/${outputFormat};base64,${imageBase64}`;
 
+		const originalNameWithoutExtension = file.originalname
+			.split('.')
+			.slice(0, -1)
+			.join('.');
+
 		return {
 			fileName: preserveFileName
-				? file.originalname
+				? `${originalNameWithoutExtension}.${outputFormat}`
 				: `${v4()}.${outputFormat}`,
 			originalSize: file.size,
 			optimizedSize,
