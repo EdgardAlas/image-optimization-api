@@ -3,6 +3,7 @@ import * as sharp from 'sharp';
 import { BaseService } from 'src/common/base-service';
 import { OptimizeImagesRequestDto } from '../dto/requests/optimize-images.request.dto';
 import { OptimizeImagesResponseDto } from '../dto/responses/optimize-images.response.dto';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class OptimizeImagesService
@@ -102,7 +103,7 @@ export class OptimizeImagesService
 		return {
 			fileName: preserveFileName
 				? file.originalname
-				: `${crypto.randomUUID()}.${outputFormat}`,
+				: `${v4()}.${outputFormat}`,
 			originalSize: file.size,
 			optimizedSize,
 			reduction,
